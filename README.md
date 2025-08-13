@@ -46,7 +46,7 @@ supabase.storage.from("product-images")
     Make sure a bucket named product-images exists.
 
     If your bucket name is different, update it in all places in the code.
-5️⃣ Enable Kotlin Serialization in Gradle
+##5️⃣ Enable Kotlin Serialization in Gradle
 
 Supabase Kotlin uses Kotlinx Serialization to send/receive data.
 
@@ -59,7 +59,7 @@ plugins {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
-3️ 6️⃣ Add a Custom Policy (myPolicy)
+3️## 6️⃣ Add a Custom Policy (myPolicy)
 
 To allow insert, delete, update, and select operations for the bucket:
 
@@ -89,7 +89,8 @@ with check (true);
     Save and enable the policy.
 
 ⚠️ This is for development purposes — in production, make the policy more secure.
-7️⃣ Enable RLS (Row Level Security) on products Table
+
+##7️⃣ Enable RLS (Row Level Security) on products Table
 
 Supabase requires Row Level Security (RLS) to be enabled before policies can work.
 
