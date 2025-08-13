@@ -49,7 +49,7 @@ supabase.storage.from("product-images")
 ## 5️⃣ Enable Kotlin Serialization in Gradle
 
 Supabase Kotlin uses Kotlinx Serialization to send/receive data.
-
+```
 If using Kotlin DSL (build.gradle.kts):
 
 plugins {
@@ -59,7 +59,9 @@ plugins {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
-3️## 6️⃣ Add a Custom Policy (myPolicy)
+```
+
+## 6️⃣ Add a Custom Policy (myPolicy)
 
 To allow insert, delete, update, and select operations for the bucket:
 
