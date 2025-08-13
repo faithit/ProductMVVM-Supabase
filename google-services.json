@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "669086180786",
+    "project_id": "productmvvmproject",
+    "storage_bucket": "productmvvmproject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669086180786:android:56ac50ae132ba7da56b0ab",
+        "android_client_info": {
+          "package_name": "com.faith.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMoHTNzy6NPcoM13_u12Ob47c34pb781Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
