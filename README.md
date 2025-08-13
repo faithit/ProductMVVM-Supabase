@@ -32,7 +32,7 @@ object SupabaseClientProvider {
         install(Storage)   // File storage
     }
 }
----
+```
 ## 4️⃣ Confirm Your Bucket Name
 
 When uploading images, our code uses the bucket "product-images":
