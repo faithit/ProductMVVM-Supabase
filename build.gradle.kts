@@ -68,6 +68,9 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
 
 // Supabase
+//    implementation(platform(libs.bom))
+//    implementation("io.github.jan-tennert.supabase:auth-kt")
+//    implementation(platform("io.github.jan-tennert.supabase:bom:3.2.2"))
     implementation("io.github.jan-tennert.supabase:gotrue-kt:2.1.0")
     implementation("io.github.jan-tennert.supabase:postgrest-kt:2.1.0")
     implementation("io.github.jan-tennert.supabase:storage-kt:2.1.0")

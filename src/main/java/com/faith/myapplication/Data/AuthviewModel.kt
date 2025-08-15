@@ -74,7 +74,7 @@ class AuthViewModel(var navController: NavHostController, var context: Context) 
             if (it.isSuccessful ){
                 Toast.makeText(this.context, "Successfully loggined in",
                     Toast.LENGTH_SHORT).show()
-                navController.navigate(ROUTE_ADDPRODUCT)
+                navController.navigate(ROUTE_HOME)
             }else{
                 Toast.makeText(this.context, "Error logging in",
                     Toast.LENGTH_SHORT).show()

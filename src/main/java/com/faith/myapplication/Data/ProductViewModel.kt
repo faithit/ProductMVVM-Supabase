@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 
 
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavHostController
 import com.faith.myapplication.Data.SupabaseClientProvider
 import io.github.jan.supabase.postgrest.from
@@ -64,6 +66,37 @@ class ProductViewModel(
             }
         }
     }
+    //
+    // LIST products
+    fun allProducts(
+        product: MutableState<Product>,
+        products: SnapshotStateList<Product>
+    ): SnapshotStateList<Product> {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = supabase.from("products").select()
+
+                // 🔹 Log the exact JSON returned from Supabase
+                println("RAW SUPABASE JSON: ${response.data}")
+
+                val result = response.decodeList<Product>()
+
+                withContext(Dispatchers.Main) {
+                    products.clear()
+                    products.addAll(result)
+                    if (result.isNotEmpty()) {
+                        product.value = result.first()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Error loading products: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        return products
+    }
+
 }
 
 
