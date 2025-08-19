@@ -1,4 +1,4 @@
-package com.faith.myapplication.ui.theme.screens.LOGIN
+package com.faith.myapplication.ui.theme.screens.Login
 
 
 import androidx.compose.foundation.background
@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +38,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.faith.myapplication.Data.AuthViewModel
 import com.faith.myapplication.navigation.ROUTE_REGISTER
-import com.faith.myapplication.navigation.ROUTE_HOME
 
 
 @Composable
