@@ -21,7 +21,7 @@ import com.faith.products.viewmodel.ProductViewModel
 @Composable
 fun UpdateProductScreen(
     navController: NavHostController,
-    productId: Long,
+    productId: Int,
 ) {
     val context = LocalContext.current
     val productViewModel = ProductViewModel(navController, context)

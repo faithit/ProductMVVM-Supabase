@@ -63,7 +63,7 @@ class ProductViewModel(
             }
         }
     }
-    //
+
     // return all products
     fun allProducts(
         product: MutableState<Product>,
@@ -91,7 +91,7 @@ class ProductViewModel(
         return products
     }
     //delete a product
-    fun deleteProduct(productId:Long) {
+    fun deleteProduct(productId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 supabase.from("products").delete {
@@ -112,11 +112,11 @@ class ProductViewModel(
     }
     //update a product
     fun updateProduct(
-        productId: Long,
+        productId: Int, // Supabase id is Int
         name: String,
         description: String,
-        price: Double?,
-        imageUri: Uri? = null // optional, only upload if changed
+        price: Double,
+        imageUri: Uri? = null
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -131,18 +131,20 @@ class ProductViewModel(
                     imageUrl = supabase.storage.from("product-images").publicUrl(fileName)
                 }
 
-                // Build update data
-                val updateData = mutableMapOf<String, Any>(
-                    "name" to name,
-                    "description" to description,
-                    "price" to price!!
-                )
-                if (imageUrl != null) {
-                    updateData["image_url"] = imageUrl
-                }
+                // Fetch existing product (to preserve old image if not updated)
+                val existingProduct = getProductById(productId)
 
-                // ✅ update THART PRODUCT ROW
-                supabase.from("products").update(updateData) {
+                // Build updated product object
+                val updatedProduct = Product(
+                    id = productId,
+                    name = name,
+                    description = description,
+                    price = price,
+                    image_url = imageUrl ?: existingProduct?.image_url.orEmpty()
+                )
+
+                // Perform update
+                supabase.from("products").update(updatedProduct) {
                     filter {
                         eq("id", productId)
                     }
@@ -160,8 +162,9 @@ class ProductViewModel(
             }
         }
     }
+
     //get a single product
-    suspend fun getProductById(productId: Long): Product? {
+    suspend fun getProductById(productId: Int): Product? {
         return try {
             val response = supabase.from("products")
                 .select {
