@@ -13,7 +13,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
+import androidx.compose.material3.CheckboxDefaults.colors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.faith.myapplication.models.Product
+import com.faith.myapplication.navigation.ROUTE_ADDPRODUCT
+import com.faith.myapplication.navigation.ROUTE_HOME
+import com.faith.myapplication.navigation.ROUTE_LISTPRODUCTS
 import com.faith.myapplication.navigation.ROUTE_UPDATEPRODUCT
+import com.faith.products.ui.BottomNavigationBar
 import com.faith.products.viewmodel.ProductViewModel
 
 
@@ -43,8 +53,14 @@ fun DisplayProductsScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Product List") }
+                title = { Text("Product List")},
+                        colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xFF2196F3)
+                        )
             )
+        },
+        bottomBar = {
+            BottomNavigationBar(navController)
         }
     ) { padding ->
         LazyColumn(
@@ -61,7 +77,9 @@ fun DisplayProductsScreen(navController: NavHostController) {
                         navController.navigate("$ROUTE_UPDATEPRODUCT/${prod.id}")
                     },
                     onDelete = {
-                        productviewmodel.deleteProduct(prod.id !!)
+                        //productviewmodel.deleteProduct(prod.id !!)
+
+                        productviewmodel.deleteProduct(prod.id!!, products)
                     }
                 )
             }
@@ -97,7 +115,8 @@ fun ProductItem(
             // Product Info
             Text(product.name ?: "", style = MaterialTheme.typography.titleMedium)
             Text(product.description ?: "", style = MaterialTheme.typography.bodyMedium)
-            Text("Ksh ${product.price ?: 0.0}", style = MaterialTheme.typography.bodySmall)
+            Text("Ksh ${product.price ?: 0.0}", style = MaterialTheme.typography.bodySmall,
+                color = Color.Red)
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -122,6 +141,32 @@ fun ProductItem(
                 )
             }
         }
+    }
+}
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    NavigationBar(
+        containerColor = Color(0xFF2196F3),
+        contentColor = Color.White
+    ) {
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = false,
+            onClick = { navController.navigate(ROUTE_HOME) }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Add, contentDescription = "Add") },
+            label = { Text("Add") },
+            selected = false,
+            onClick = { navController.navigate(ROUTE_ADDPRODUCT) }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.List, contentDescription = "List") },
+            label = { Text("List") },
+            selected = false,
+            onClick = { navController.navigate(ROUTE_LISTPRODUCTS) }
+        )
     }
 }
 

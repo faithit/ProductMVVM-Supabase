@@ -2,22 +2,28 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.faith.myapplication.models.Product
+import com.faith.products.ui.BottomNavigationBar
 import com.faith.products.viewmodel.ProductViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateProductScreen(
     navController: NavHostController,
@@ -48,10 +54,23 @@ fun UpdateProductScreen(
                 imageUri = uri
             }
         }
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("UPDATE PRODUCT", color = Color.White) },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xFF2196F3)
+                    )
+                )
+            }
+
+        ) { padding ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = Color.White)
+                .padding(padding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -90,15 +109,7 @@ fun UpdateProductScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Show current or new image
-//            Image(
-//                painter = rememberAsyncImagePainter(imageUri ?: product.image_url),
-//                contentDescription = "Product Image",
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(200.dp),
-//                contentScale = ContentScale.Crop
-//            )
+
             val imageSource: Any = imageUri ?: product!!.image_url
 
             Image(
@@ -132,5 +143,12 @@ fun UpdateProductScreen(
             }
         }
     }
-
+    }
 }
+    @Preview(showBackground = true)
+    @Composable
+    fun updatepreview(){
+        UpdateProductScreen(rememberNavController(),productId=0)
+    }
+
+

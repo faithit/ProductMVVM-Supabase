@@ -91,7 +91,26 @@ class ProductViewModel(
         return products
     }
     //delete a product
-    fun deleteProduct(productId: Int) {
+//    fun deleteProduct(productId: Int) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                supabase.from("products").delete {
+//                    filter {
+//                        eq("id", productId)
+//                    }
+//                }
+//                withContext(Dispatchers.Main) {
+//                    Toast.makeText(context, "Product deleted!", Toast.LENGTH_SHORT).show()
+//                    //allProducts() // refresh the product list
+//                }
+//            } catch (e: Exception) {
+//                withContext(Dispatchers.Main) {
+//                    Toast.makeText(context, "Delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
+    fun deleteProduct(productId: Int, products: SnapshotStateList<Product>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 supabase.from("products").delete {
@@ -100,8 +119,10 @@ class ProductViewModel(
                     }
                 }
                 withContext(Dispatchers.Main) {
+                    // ✅ Remove deleted product locally
+                    products.removeAll { it.id == productId }
+
                     Toast.makeText(context, "Product deleted!", Toast.LENGTH_SHORT).show()
-                    //allProducts() // refresh the product list
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -110,9 +131,10 @@ class ProductViewModel(
             }
         }
     }
+
     //update a product
     fun updateProduct(
-        productId: Int, // Supabase id is Int
+        productId: Int,
         name: String,
         description: String,
         price: Double,
@@ -173,7 +195,7 @@ class ProductViewModel(
                     }
                     limit(1)
                 }
-                .decodeSingleOrNull<Product>()  // ✅ returns null if not found
+                .decodeSingleOrNull<Product>()  //returns null if not found
 
             response
         } catch (e: Exception) {
